@@ -43,6 +43,14 @@ apps/extension/.crx
 # ...but DO publish the prebuilt extension so reviewers can load it unpacked
 !apps/extension/annotate-extension.zip
 
+# Internal docs / planning — kept LOCAL, never published to the public repo.
+# Full pre-public copies live in the local tag backup/private-history-2026-05-22.
+docs/
+design/
+prd.md
+ROSETTA.md
+.rosetta/
+
 # Misc
 coverage/
 .cache/
