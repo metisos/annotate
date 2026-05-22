@@ -1,0 +1,132 @@
+/* Annotate — design tokens (ported from design/styles/system.css) */
+
+:root {
+  /* Paper palette (warm light) */
+  --paper:        #fbfaf6;
+  --paper-2:      #ffffff;
+  --paper-3:      #f4f1e8;
+  --highlight:    #fff3cf;
+  --ink:          #14120e;
+  --ink-2:        #4a463f;
+  --ink-3:        #8c877e;
+  --ink-4:        #b6b1a5;
+  --rule:         #e9e3d4;
+  --rule-2:       #d8d2c0;
+  --rule-strong:  #1a1814;
+
+  /* Brand accent — editorial vermilion */
+  --accent:        #d34a1c;
+  --accent-deep:   #b03a13;
+  --accent-soft:   #fbe5d8;
+  --accent-tint:   #fef0e7;
+
+  /* Per-page theme tokens (default = conversation/neutral) */
+  --theme:           var(--accent);
+  --theme-soft:      var(--accent-soft);
+  --theme-tint:      var(--accent-tint);
+  --theme-deep:      var(--accent-deep);
+  --theme-label:     "conversation";
+
+  /* Type */
+  --f-display: "Newsreader", "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --f-ui:      "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Radii */
+  --r-1: 4px;
+  --r-2: 8px;
+  --r-3: 12px;
+  --r-pill: 999px;
+}
+
+/* Theme presets (applied on data-theme element) */
+[data-theme="debate"]        { --theme:#c8321c; --theme-soft:#f6d8d1; --theme-tint:#fbece6; --theme-deep:#9c2613; --theme-label:"debate"; }
+[data-theme="analysis"]      { --theme:#1f4ed8; --theme-soft:#d6def7; --theme-tint:#eaeffb; --theme-deep:#1638a4; --theme-label:"analysis"; }
+[data-theme="culture"]       { --theme:#6b3aa0; --theme-soft:#e2d5f0; --theme-tint:#eee5f7; --theme-deep:#522678; --theme-label:"culture"; }
+[data-theme="breaking"]      { --theme:#d6671a; --theme-soft:#f7dcc4; --theme-tint:#fbeadb; --theme-deep:#a64e12; --theme-label:"breaking"; }
+[data-theme="conversation"]  { --theme:#2f7a4a; --theme-soft:#cfe3d6; --theme-tint:#e3efe8; --theme-deep:#205634; --theme-label:"conversation"; }
+[data-theme="investigation"] { --theme:#1a1814; --theme-soft:#cfcabb; --theme-tint:#e0dccf; --theme-deep:#000000; --theme-label:"investigation"; }
+[data-theme="personal"]      { --theme:#6e6256; --theme-soft:#dcd6c8; --theme-tint:#ebe6d8; --theme-deep:#4a4239; --theme-label:"personal"; }
+[data-theme="tech"]          { --theme:#0a7d8c; --theme-soft:#c9e1e5; --theme-tint:#dceef1; --theme-deep:#075b66; --theme-label:"tech"; }
+
+html, body { margin: 0; padding: 0; background: var(--paper); }
+body {
+  font-family: var(--f-ui);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+  line-height: 1.4;
+}
+
+.ann *, .ann *::before, .ann *::after { box-sizing: border-box; }
+.ann {
+  font-family: var(--f-ui);
+  color: var(--ink);
+  background: var(--paper);
+}
+.ann h1, .ann h2, .ann h3, .ann h4 { margin: 0; font-weight: 500; }
+.ann p { margin: 0; }
+.ann a { color: inherit; text-decoration: none; }
+.ann button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.ann ::selection { background: var(--accent-soft); color: var(--ink); }
+
+/* Utility */
+.serif    { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.01em; }
+.serif-i  { font-family: var(--f-display); font-style: italic; font-weight: 300; letter-spacing: -0.005em; }
+.mono     { font-family: var(--f-mono); font-feature-settings: "zero"; }
+.eyebrow  {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.kicker   {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--theme);
+}
+.rule     { height: 1px; background: var(--rule); width: 100%; }
+.rule-ink { height: 1px; background: var(--rule-strong); width: 100%; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 14px;
+  border-radius: var(--r-pill);
+  font-size: 13.5px; font-weight: 500;
+  background: var(--ink); color: var(--paper);
+  transition: transform .12s ease, background .12s ease;
+  border: 0; cursor: pointer; font-family: var(--f-ui);
+}
+.btn:hover { background: #000; }
+.btn--ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule-2); }
+.btn--ghost:hover { background: var(--paper-3); }
+.btn--accent { background: var(--theme); color: #fff; }
+.btn--accent:hover { background: var(--theme-deep); }
+.btn--sm { height: 28px; padding: 0 11px; font-size: 12px; }
+.btn--xs { height: 24px; padding: 0 9px; font-size: 11.5px; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 22px; padding: 0 9px;
+  border-radius: var(--r-pill);
+  background: var(--paper-3);
+  color: var(--ink-2);
+  font-size: 11px; letter-spacing: 0.02em;
+  font-family: var(--f-ui);
+}
+.chip--theme { background: var(--theme-tint); color: var(--theme-deep); }
+.chip--ink   { background: var(--ink); color: var(--paper); }
+
+/* Card */
+.card {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-3);
+}

@@ -1,0 +1,72 @@
+/* Annotate — extension side panel tokens (mirrors apps/web globals.css) */
+
+:root {
+  --paper:        #fbfaf6;
+  --paper-2:      #ffffff;
+  --paper-3:      #f4f1e8;
+  --highlight:    #fff3cf;
+  --ink:          #14120e;
+  --ink-2:        #4a463f;
+  --ink-3:        #8c877e;
+  --ink-4:        #b6b1a5;
+  --rule:         #e9e3d4;
+  --rule-2:       #d8d2c0;
+  --rule-strong:  #1a1814;
+
+  --accent:        #d34a1c;
+  --accent-deep:   #b03a13;
+  --accent-soft:   #fbe5d8;
+  --accent-tint:   #fef0e7;
+
+  --theme:           var(--accent);
+  --theme-soft:      var(--accent-soft);
+  --theme-tint:      var(--accent-tint);
+  --theme-deep:      var(--accent-deep);
+
+  --f-display: "Newsreader", "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --f-ui:      "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --r-1: 4px;
+  --r-2: 8px;
+  --r-3: 12px;
+  --r-pill: 999px;
+}
+
+html, body, #root { margin: 0; padding: 0; height: 100%; background: var(--paper); }
+body {
+  font-family: var(--f-ui);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+  line-height: 1.4;
+  font-size: 13px;
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+.serif    { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.01em; }
+.serif-i  { font-family: var(--f-display); font-style: italic; font-weight: 300; letter-spacing: -0.005em; }
+.mono     { font-family: var(--f-mono); font-feature-settings: "zero"; }
+.eyebrow  {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 14px;
+  border-radius: var(--r-pill);
+  font-size: 13.5px; font-weight: 500;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--f-ui);
+}
+.btn:hover { background: #000; }
+.btn--ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule-2); }
+.btn--ghost:hover { background: var(--paper-3); }
+.btn--accent { background: var(--theme); color: #fff; }
+.btn--accent:hover { background: var(--theme-deep); }
+.btn--sm { height: 28px; padding: 0 11px; font-size: 12px; }

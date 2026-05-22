@@ -1,0 +1,78 @@
+export const THEMES = {
+  debate: {
+    label: 'Debate',
+    accentColor: '#c8321c',
+    softColor: '#f6d8d1',
+    tintColor: '#fbece6',
+    deepColor: '#9c2613',
+    feel: 'Bold, high-contrast',
+    trigger: 'Political discourse, disagreements, hot takes',
+  },
+  analysis: {
+    label: 'Analysis',
+    accentColor: '#1f4ed8',
+    softColor: '#d6def7',
+    tintColor: '#eaeffb',
+    deepColor: '#1638a4',
+    feel: 'Clean, structured',
+    trigger: 'Data-heavy, financial, technical breakdowns',
+  },
+  culture: {
+    label: 'Culture',
+    accentColor: '#6b3aa0',
+    softColor: '#e2d5f0',
+    tintColor: '#eee5f7',
+    deepColor: '#522678',
+    feel: 'Expressive, editorial',
+    trigger: 'Music, film, art, entertainment commentary',
+  },
+  breaking: {
+    label: 'Breaking',
+    accentColor: '#d6671a',
+    softColor: '#f7dcc4',
+    tintColor: '#fbeadb',
+    deepColor: '#a64e12',
+    feel: 'Urgent, high-energy',
+    trigger: 'News events, live reactions, urgent content',
+  },
+  conversation: {
+    label: 'Conversation',
+    accentColor: '#2f7a4a',
+    softColor: '#cfe3d6',
+    tintColor: '#e3efe8',
+    deepColor: '#205634',
+    feel: 'Warm, approachable',
+    trigger: 'Interviews, podcasts, casual dialogue',
+  },
+  investigation: {
+    label: 'Investigation',
+    accentColor: '#1a1814',
+    softColor: '#cfcabb',
+    tintColor: '#e0dccf',
+    deepColor: '#000000',
+    feel: 'Serious, authoritative',
+    trigger: 'Deep dives, research, fact-heavy content',
+  },
+  personal: {
+    label: 'Personal',
+    accentColor: '#6e6256',
+    softColor: '#dcd6c8',
+    tintColor: '#ebe6d8',
+    deepColor: '#4a4239',
+    feel: 'Minimal, intimate',
+    trigger: 'Personal stories, opinions, reflections',
+  },
+  tech: {
+    label: 'Tech',
+    accentColor: '#0a7d8c',
+    softColor: '#c9e1e5',
+    tintColor: '#dceef1',
+    deepColor: '#075b66',
+    feel: 'Modern, sharp',
+    trigger: 'Product launches, demos, technical content',
+  },
+} as const;
+
+export type ThemeName = keyof typeof THEMES;
+export const THEME_NAMES = Object.keys(THEMES) as ThemeName[];
+export const DEFAULT_THEME: ThemeName = 'conversation';

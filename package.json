@@ -1,0 +1,23 @@
+{
+  "name": "annotate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-powered Chrome sidebar for clipping, annotating, and sharing media moments.",
+  "packageManager": "pnpm@10.26.2",
+  "scripts": {
+    "dev:web": "pnpm --filter @annotate/web dev",
+    "dev:ext": "pnpm --filter @annotate/extension dev",
+    "build": "pnpm --filter @annotate/web build",
+    "build:web": "pnpm --filter @annotate/web build",
+    "build:ext": "pnpm --filter @annotate/extension build",
+    "start": "pnpm --filter @annotate/web start",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

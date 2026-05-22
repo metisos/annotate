@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.next/
+out/
+.turbo/
+
+# Secrets / env
+.env
+.env.local
+.env.*.local
+secrets/
+*.serviceaccount.json
+*adminsdk*
+firebase-adminsdk-*.json
+*.pem
+*.key
+
+# Local screenshots / scratch at repo root (extension icons in subdirs are fine)
+/*.PNG
+/*.png
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Chrome extension build
+apps/extension/dist/
+apps/extension/.crx
+*.zip
+# ...but DO publish the prebuilt extension so reviewers can load it unpacked
+!apps/extension/annotate-extension.zip
+
+# Misc
+coverage/
+.cache/
