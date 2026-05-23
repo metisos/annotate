@@ -38,11 +38,15 @@ export async function suggestMoments(input: { youtubeUrl: string }): Promise<Sug
 
   return (raw.moments ?? [])
     .filter((m: SuggestedMoment) => Number.isFinite(m.startTime) && Number.isFinite(m.endTime) && m.endTime > m.startTime)
-    .map((m: SuggestedMoment): SuggestedMoment => ({
-      startTime: Math.max(0, Math.floor(m.startTime)),
-      endTime: Math.min(m.startTime + 90, Math.floor(m.endTime)),
-      label: (m.label ?? '').trim().slice(0, 200),
-    }))
+    .map((m: SuggestedMoment): SuggestedMoment => {
+      // Clamp the start to a non-negative integer first, then cap the end off
+      // that clamped value. The model is asked for INTEGER seconds but sometimes
+      // returns fractional ones; deriving the 90s cap from the raw start could
+      // yield a >90s (and non-integer) duration the clip pipeline rejects.
+      const startTime = Math.max(0, Math.floor(m.startTime));
+      const endTime = Math.min(Math.floor(m.endTime), startTime + 90);
+      return { startTime, endTime, label: (m.label ?? '').trim().slice(0, 200) };
+    })
     .filter((m: SuggestedMoment) => m.endTime - m.startTime >= 5)
     .slice(0, 6);
 }
