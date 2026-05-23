@@ -8,18 +8,27 @@ Open the side panel on any page — a YouTube video, a podcast, a news article �
 
 ---
 
-## Install the extension (for reviewers)
+## Install the extension
 
-The Chrome Web Store listing is **pending review**, so for now you load the extension unpacked. It takes about a minute and no build tools are required.
+Annotate is live on the Chrome Web Store:
+
+👉 **[Add Annotate to Chrome](https://chromewebstore.google.com/detail/kbfnejmkbfchkimiphfbnegpmngabboa)**
+
+Click **Add to Chrome**, then pin Annotate so it's one click away. On any page (YouTube, an article, a podcast), click the Annotate icon to open the side panel, **sign in with Google**, and start clipping. Everything you publish appears on the web app at `https://annotate.metisos.co` immediately — no local server needed.
+
+> Install instructions are also available in-app at https://annotate.metisos.co/install-extension.
+
+<details>
+<summary><strong>Prefer to load it unpacked?</strong> (developers)</summary>
+
+No build tools required — it takes about a minute.
 
 1. **Download the build** — grab [`annotate-extension.zip`](https://github.com/metisos/annotate/raw/main/apps/extension/annotate-extension.zip), then unzip it. You'll get a folder named `annotate-extension`.
 2. **Open Chrome extensions** — go to `chrome://extensions` and turn on **Developer mode** (top-right toggle).
 3. **Load unpacked** — click **Load unpacked** and select the `annotate-extension` folder you just unzipped. Pin Annotate so it's one click away.
-4. **Use it** — on any page (YouTube, an article, a podcast), click the Annotate icon to open the side panel, **sign in with Google**, and start clipping.
+4. **Use it** — on any page, click the Annotate icon to open the side panel, **sign in with Google**, and start clipping.
 
-The extension talks to the live backend at `https://annotate.metisos.co`, so everything you publish appears on the web app immediately — no local server needed.
-
-> Installation instructions are also available in-app at https://annotate.metisos.co/install-extension.
+</details>
 
 ---
 

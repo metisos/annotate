@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   description: 'Add Annotate to Chrome and start clipping moments from any media on the web.',
 };
 
-const CHROME_STORE_URL = process.env.NEXT_PUBLIC_CHROME_EXTENSION_URL;
+const CHROME_STORE_URL =
+  process.env.NEXT_PUBLIC_CHROME_EXTENSION_URL ??
+  'https://chromewebstore.google.com/detail/kbfnejmkbfchkimiphfbnegpmngabboa';
 
 export default async function InstallExtensionPage() {
   const me = await getSessionUser();
@@ -57,49 +59,41 @@ export default async function InstallExtensionPage() {
           you publish lives. You need both.
         </p>
 
-        {CHROME_STORE_URL ? (
-          <div style={{ marginTop: 32 }}>
-            <Link
-              href={CHROME_STORE_URL}
-              className="btn"
-              style={{ height: 48, padding: '0 24px', fontSize: 14 }}
-            >
-              Add to Chrome
-            </Link>
-          </div>
-        ) : (
-          <div
-            style={{
-              marginTop: 32,
-              padding: '14px 18px',
-              background: 'var(--paper-2)',
-              border: '1px dashed var(--rule-strong)',
-              borderRadius: 8,
-              fontSize: 13.5,
-              color: 'var(--ink-2)',
-              maxWidth: 640,
-            }}
+        <div style={{ marginTop: 32, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <Link
+            href={CHROME_STORE_URL}
+            className="btn"
+            style={{ height: 48, padding: '0 24px', fontSize: 14 }}
           >
-            <strong style={{ color: 'var(--ink)' }}>Chrome Web Store listing — pending review.</strong>{' '}
-            While we wait, you can load the unpacked build below. It takes about a minute.
-          </div>
-        )}
+            Add to Chrome
+          </Link>
+          <span style={{ fontSize: 13.5, color: 'var(--ink-3)' }}>
+            Free · one click from the Chrome Web Store
+          </span>
+        </div>
       </section>
 
       <div style={{ height: 1, background: 'var(--rule-strong)', margin: '0 32px' }} />
 
       <section style={{ padding: '40px 32px 80px', maxWidth: 820, margin: '0 auto' }}>
+        <div className="eyebrow" style={{ marginBottom: 12 }}>
+          § for developers
+        </div>
         <h2
           className="serif"
           style={{
             fontSize: 26,
             fontWeight: 500,
             letterSpacing: '-0.015em',
-            marginBottom: 24,
+            marginBottom: 12,
           }}
         >
-          Load the unpacked dev build
+          Prefer to load it unpacked?
         </h2>
+        <p style={{ fontSize: 14.5, color: 'var(--ink-2)', lineHeight: 1.55, marginBottom: 24, maxWidth: 640 }}>
+          Most people should just use the Chrome Web Store button above. If you'd rather run the
+          open-source build directly — or want the latest unreleased changes — load it unpacked.
+        </p>
 
         <ol
           style={{

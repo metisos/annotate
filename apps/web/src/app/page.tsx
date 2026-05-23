@@ -1,9 +1,14 @@
 import Link from 'next/link';
 import { Wordmark } from '@/components/Wordmark';
 import { InstallExtensionCTA } from '@/components/InstallExtensionCTA';
+import { Puzzle } from '@/components/Icons';
 import { getSessionUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
+
+const CHROME_STORE_URL =
+  process.env.NEXT_PUBLIC_CHROME_EXTENSION_URL ??
+  'https://chromewebstore.google.com/detail/kbfnejmkbfchkimiphfbnegpmngabboa';
 
 export default async function HomePage() {
   const me = await getSessionUser();
@@ -87,10 +92,18 @@ export default async function HomePage() {
           take — you stay the author.
         </p>
 
-        <div style={{ marginTop: 40, display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ marginTop: 40, display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <Link
+            href={CHROME_STORE_URL}
+            className="btn btn--accent"
+            style={{ height: 48, padding: '0 24px', fontSize: 14.5 }}
+          >
+            <Puzzle size={17} />
+            Add to Chrome — it's free
+          </Link>
           {me ? (
             <>
-              <Link href={dashboardHref} className="btn" style={{ height: 48, padding: '0 22px', fontSize: 14 }}>
+              <Link href={dashboardHref} className="btn btn--ghost" style={{ height: 48, padding: '0 22px', fontSize: 14 }}>
                 Go to dashboard
               </Link>
               <Link href="/feed" className="btn btn--ghost" style={{ height: 48, padding: '0 22px', fontSize: 14 }}>
@@ -99,8 +112,8 @@ export default async function HomePage() {
             </>
           ) : (
             <>
-              <Link href="/sign-up" className="btn" style={{ height: 48, padding: '0 22px', fontSize: 14 }}>
-                Get started — it's free
+              <Link href="/sign-up" className="btn btn--ghost" style={{ height: 48, padding: '0 22px', fontSize: 14 }}>
+                Get started
               </Link>
               <Link href="/sign-in" className="btn btn--ghost" style={{ height: 48, padding: '0 22px', fontSize: 14 }}>
                 Sign in
@@ -108,6 +121,9 @@ export default async function HomePage() {
             </>
           )}
         </div>
+        <p style={{ marginTop: 14, fontSize: 13, color: 'var(--ink-3)' }}>
+          Works on any page — YouTube, podcasts, articles. Free on the Chrome Web Store.
+        </p>
       </section>
 
       <InstallExtensionCTA />

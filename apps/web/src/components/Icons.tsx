@@ -103,3 +103,8 @@ export const Source = (p: IconProps) => (
     <path d="M10 17v-7a3 3 0 0 1 3-3h6M19 7l-3-3M19 7l-3 3M5 21h14" />
   </Svg>
 );
+export const Puzzle = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9 3a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-1a2 2 0 0 0-4 0v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a2 2 0 0 0 0-4H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 0 1-1V3Z" />
+  </Svg>
+);
