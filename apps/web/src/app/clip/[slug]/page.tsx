@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { ObjectId } from 'mongodb';
-import { annotations, comments, follows, users } from '@/lib/mongo';
+import { annotations, comments, follows, users, votes } from '@/lib/mongo';
 import { getSessionUser } from '@/lib/auth';
 import { findRelatedBundle } from '@/lib/usc/related-federated';
 import { AnnotationPage } from '@/components/AnnotationPage';
@@ -114,6 +114,18 @@ export default async function ClipPage({
     amFollowing = Boolean(f);
   }
 
+  // Have I upvoted this clip?
+  let amVoted = false;
+  if (viewer) {
+    const v = await (
+      await votes()
+    ).findOne({
+      userId: String(viewer._id),
+      annotationId: String(loaded.ann._id),
+    });
+    amVoted = Boolean(v);
+  }
+
   // Related — USC semantic neighbors (internal + federated)
   const semanticText = [
     loaded.ann.pageDesign?.pageTitle,
@@ -136,6 +148,7 @@ export default async function ClipPage({
       comments={annComments}
       commentAuthors={commentAuthors}
       amFollowing={amFollowing}
+      amVoted={amVoted}
       related={relatedBundle.internal}
       relatedExternal={relatedBundle.external}
     />

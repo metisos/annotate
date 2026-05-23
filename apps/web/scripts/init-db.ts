@@ -25,6 +25,7 @@ async function main() {
   const follows = db.collection('follows');
   const comments = db.collection('comments');
   const claims = db.collection('claims');
+  const votes = db.collection('votes');
 
   const results = await Promise.all([
     users.createIndex({ firebaseUid: 1 }, { unique: true, name: 'firebaseUid_unique' }),
@@ -34,6 +35,7 @@ async function main() {
     annotations.createIndex({ userId: 1, createdAt: -1 }, { name: 'user_recent' }),
     annotations.createIndex({ 'source.canonicalUrl': 1, createdAt: -1 }, { name: 'source_recent' }),
     annotations.createIndex({ createdAt: -1 }, { name: 'global_feed' }),
+    annotations.createIndex({ 'stats.votes': -1, createdAt: -1 }, { name: 'top_voted' }),
 
     follows.createIndex({ followerId: 1, followingId: 1 }, { unique: true, name: 'follow_pair' }),
     follows.createIndex({ followingId: 1, createdAt: -1 }, { name: 'followers_recent' }),
@@ -41,9 +43,20 @@ async function main() {
     comments.createIndex({ annotationId: 1, createdAt: -1 }, { name: 'comments_recent' }),
 
     claims.createIndex({ annotationId: 1, createdAt: -1 }, { name: 'claims_recent' }),
+
+    votes.createIndex({ userId: 1, annotationId: 1 }, { unique: true, name: 'vote_pair' }),
+    votes.createIndex({ annotationId: 1 }, { name: 'votes_by_annotation' }),
   ]);
 
   console.log('Created indexes:', results);
+
+  // Backfill stats.votes on annotations published before upvoting existed.
+  const backfill = await annotations.updateMany(
+    { 'stats.votes': { $exists: false } },
+    { $set: { 'stats.votes': 0 } },
+  );
+  console.log(`Backfilled stats.votes on ${backfill.modifiedCount} annotations`);
+
   await client.close();
 }
 

@@ -57,6 +57,7 @@ export interface AnnotationStats {
   views: number;
   comments: number;
   shares: number;
+  votes: number;
 }
 
 export interface AnnotationClaim {

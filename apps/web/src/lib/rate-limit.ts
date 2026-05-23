@@ -1,6 +1,6 @@
 import { getDb } from './mongo';
 
-export type LimitKind = 'text' | 'video' | 'audio' | 'aiDraft' | 'suggest';
+export type LimitKind = 'text' | 'video' | 'audio' | 'aiDraft' | 'suggest' | 'vote';
 
 const DAILY_LIMITS: Record<LimitKind, number> = {
   text: 100,
@@ -8,6 +8,7 @@ const DAILY_LIMITS: Record<LimitKind, number> = {
   audio: 30,
   aiDraft: 50,
   suggest: 5,
+  vote: 300,
 };
 
 function dayKey(d = new Date()): string {

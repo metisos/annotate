@@ -88,6 +88,48 @@ async function main() {
   const { annotation: full } = (await ann.json()) as { annotation: { stats: { comments: number } } };
   console.log(`  → annotation.stats.comments=${full.stats.comments}`);
 
+  const voteUrl = `${APP_URL}/api/clips/${annotation.slug}/vote`;
+  const voteHeaders = { authorization: `Bearer ${bob.idToken}` };
+
+  console.log('[social] Bob upvotes the annotation');
+  const v1 = (await (await fetch(voteUrl, { method: 'POST', headers: voteHeaders })).json()) as {
+    voted: boolean;
+    votes: number;
+  };
+  console.log(`  → POST vote: voted=${v1.voted} votes=${v1.votes}`);
+  if (v1.votes !== 1) {
+    console.error('  ❌ expected votes=1 after first upvote');
+    process.exit(1);
+  }
+
+  console.log('[social] Bob upvotes again (must be idempotent)');
+  const v2 = (await (await fetch(voteUrl, { method: 'POST', headers: voteHeaders })).json()) as {
+    votes: number;
+  };
+  console.log(`  → POST vote again: votes=${v2.votes}`);
+  if (v2.votes !== 1) {
+    console.error('  ❌ double-upvote should stay at 1 (unique index)');
+    process.exit(1);
+  }
+
+  console.log('[social] GET vote state for Bob');
+  const vg = (await (await fetch(voteUrl, { headers: voteHeaders })).json()) as { voted: boolean };
+  if (vg.voted !== true) {
+    console.error('  ❌ expected voted=true for Bob');
+    process.exit(1);
+  }
+
+  console.log('[social] Bob removes his upvote');
+  const v3 = (await (await fetch(voteUrl, { method: 'DELETE', headers: voteHeaders })).json()) as {
+    voted: boolean;
+    votes: number;
+  };
+  console.log(`  → DELETE vote: voted=${v3.voted} votes=${v3.votes}`);
+  if (v3.votes !== 0) {
+    console.error('  ❌ expected votes=0 after removing the upvote');
+    process.exit(1);
+  }
+
   console.log('[social] Bob unfollows Alice');
   const unfollow = await fetch(`${APP_URL}/api/follow/${alice.handle}`, {
     method: 'DELETE',
@@ -112,6 +154,7 @@ async function main() {
     await db.collection('comments').deleteMany({});
     await db.collection('users').deleteMany({ firebaseUid: { $in: [ALICE, BOB] } });
     await db.collection('follows').deleteMany({});
+    await db.collection('votes').deleteMany({});
     await mongo.close();
     await Promise.all([ALICE, BOB].map((u) => getAuth().deleteUser(u).catch(() => {})));
   }

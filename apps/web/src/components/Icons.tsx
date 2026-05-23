@@ -108,3 +108,8 @@ export const Puzzle = (p: IconProps) => (
     <path d="M9 3a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-1a2 2 0 0 0-4 0v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a2 2 0 0 0 0-4H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 0 1-1V3Z" />
   </Svg>
 );
+export const Upvote = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 19V5M6 11l6-6 6 6" />
+  </Svg>
+);

@@ -1,5 +1,5 @@
 import { MongoClient, type Db, type Collection } from 'mongodb';
-import type { Annotation, User, Comment, Claim, Follow } from '@annotate/shared';
+import type { Annotation, User, Comment, Claim, Follow, Vote } from '@annotate/shared';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -39,6 +39,9 @@ export async function claims(): Promise<Collection<Claim>> {
 }
 export async function follows(): Promise<Collection<Follow>> {
   return (await getDb()).collection<Follow>('follows');
+}
+export async function votes(): Promise<Collection<Vote>> {
+  return (await getDb()).collection<Vote>('votes');
 }
 
 export async function getAnnotationBySlug(slug: string): Promise<Annotation | null> {

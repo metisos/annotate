@@ -112,9 +112,9 @@ export function AnnotationCard({ annotation }: { annotation: Annotation }) {
             fontSize: 11.5,
           }}
         >
+          <span>{annotation.stats.votes ?? 0} votes</span>
           <span>{annotation.stats.views} views</span>
           <span>{annotation.stats.comments} comments</span>
-          <span>{annotation.stats.shares} shares</span>
         </div>
       </div>
     </Link>

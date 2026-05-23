@@ -48,3 +48,46 @@ export async function fetchFeed(input: {
 
   return { clips: page, nextCursor };
 }
+
+/**
+ * Top clips for the landing strip: highest-voted within a recent window,
+ * topped up with the most recent ready clips so the strip is never thin
+ * while the product is young. uscEmbedding is dropped to keep payloads small
+ * (these feed AnnotationCard, which never reads it).
+ */
+export async function fetchTopClips(input?: {
+  limit?: number;
+  windowDays?: number;
+}): Promise<Annotation[]> {
+  const limit = Math.min(Math.max(1, input?.limit ?? 6), MAX_LIMIT);
+  const windowDays = input?.windowDays ?? 30;
+  const col = await annotations();
+  const cutoff = new Date(Date.now() - windowDays * 86_400_000);
+
+  const strip = (a: Annotation): Annotation => {
+    const rest = { ...a };
+    delete rest.uscEmbedding;
+    return rest;
+  };
+
+  const top = (
+    await col
+      .find({ status: 'ready', createdAt: { $gte: cutoff } })
+      .sort({ 'stats.votes': -1, createdAt: -1 })
+      .limit(limit)
+      .toArray()
+  ).map(strip);
+
+  if (top.length >= limit) return top;
+
+  // Fallback: top up with most-recent ready clips not already included.
+  const have = new Set(top.map((c) => String(c._id)));
+  const recent = (
+    await col.find({ status: 'ready' }).sort({ createdAt: -1 }).limit(limit * 2).toArray()
+  ).map(strip);
+  for (const c of recent) {
+    if (top.length >= limit) break;
+    if (!have.has(String(c._id))) top.push(c);
+  }
+  return top.slice(0, limit);
+}

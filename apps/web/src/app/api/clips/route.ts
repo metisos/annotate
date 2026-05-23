@@ -114,7 +114,7 @@ export async function POST(req: Request) {
       generatedAt: now,
       userOverridden: false,
     },
-    stats: { views: 0, comments: 0, shares: 0 },
+    stats: { views: 0, comments: 0, shares: 0, votes: 0 },
     createdAt: now,
     updatedAt: now,
   };

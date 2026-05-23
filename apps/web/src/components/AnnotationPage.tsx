@@ -13,6 +13,7 @@ import { OwnerActions } from './OwnerActions';
 import { RestyleButton } from './RestyleButton';
 import { Comments } from './Comments';
 import { FollowButton } from './FollowButton';
+import { VoteButton } from './VoteButton';
 import { ShareDialog } from './ShareDialog';
 import { RelatedClips } from './RelatedClips';
 import { InstallExtensionBanner } from './InstallExtensionBanner';
@@ -37,6 +38,7 @@ export function AnnotationPage({
   comments,
   commentAuthors,
   amFollowing,
+  amVoted,
   related,
   relatedExternal,
 }: {
@@ -46,6 +48,7 @@ export function AnnotationPage({
   comments: Comment[];
   commentAuthors: Record<string, { handle: string; displayName: string }>;
   amFollowing: boolean;
+  amVoted: boolean;
   related?: Array<{ annotation: Annotation; score: number }>;
   relatedExternal?: UscHit[];
 }) {
@@ -351,6 +354,17 @@ export function AnnotationPage({
 
         {/* SIDEBAR */}
         <aside style={{ display: 'flex', flexDirection: 'column', gap: 28, paddingTop: 8 }}>
+          {/* Upvote */}
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 10 }}>Was this worth your time?</div>
+            <VoteButton
+              slug={annotation.slug}
+              initialVoted={amVoted}
+              initialVotes={annotation.stats.votes ?? 0}
+              canVote={Boolean(viewer)}
+            />
+          </div>
+
           {/* Share card */}
           <div
             style={{
@@ -454,8 +468,9 @@ export function AnnotationPage({
           </div>
 
           {/* Stats strip */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
             {[
+              ['Votes', annotation.stats.votes ?? 0],
               ['Views', annotation.stats.views],
               ['Comments', annotation.stats.comments],
               ['Shares', annotation.stats.shares],

@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import { unstable_cache } from 'next/cache';
 import { Wordmark } from '@/components/Wordmark';
 import { InstallExtensionCTA } from '@/components/InstallExtensionCTA';
+import { AnnotationCard } from '@/components/AnnotationCard';
 import { Puzzle } from '@/components/Icons';
 import { getSessionUser } from '@/lib/auth';
+import { fetchTopClips } from '@/lib/feed';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,9 +13,16 @@ const CHROME_STORE_URL =
   process.env.NEXT_PUBLIC_CHROME_EXTENSION_URL ??
   'https://chromewebstore.google.com/detail/kbfnejmkbfchkimiphfbnegpmngabboa';
 
+// Cache the landing strip so the homepage doesn't hit Atlas on every load;
+// the hero itself stays per-request (it reads the session).
+const getTopClips = unstable_cache(() => fetchTopClips({ limit: 6, windowDays: 30 }), [
+  'landing-top-clips',
+], { revalidate: 60, tags: ['top-clips'] });
+
 export default async function HomePage() {
   const me = await getSessionUser();
   const dashboardHref = me ? `/u/${me.handle}` : '/sign-in';
+  const topClips = await getTopClips();
 
   return (
     <main style={{ minHeight: '100dvh', background: 'var(--paper)' }}>
@@ -154,6 +164,36 @@ export default async function HomePage() {
         </p>
         </div>
       </section>
+
+      {topClips.length > 0 && (
+        <section style={{ padding: '64px 32px 0', maxWidth: 1080, margin: '0 auto' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              gap: 16,
+              marginBottom: 24,
+            }}
+          >
+            <div className="eyebrow">§ what people are clipping</div>
+            <Link href="/feed" style={{ fontSize: 13, color: 'var(--ink-2)' }}>
+              Browse the feed →
+            </Link>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: 20,
+            }}
+          >
+            {topClips.map((c) => (
+              <AnnotationCard key={c.slug} annotation={c} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <InstallExtensionCTA />
 
