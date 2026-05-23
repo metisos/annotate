@@ -52,11 +52,39 @@ export default async function HomePage() {
 
       <section
         style={{
-          padding: '120px 32px 80px',
-          maxWidth: 1080,
-          margin: '0 auto',
+          position: 'relative',
+          overflow: 'hidden',
+          borderBottom: '1px solid var(--rule)',
         }}
       >
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: 'url(/hero-bg.avif)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center right',
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(100deg, rgba(251,250,246,0.97) 0%, rgba(251,250,246,0.93) 38%, rgba(251,250,246,0.64) 68%, rgba(251,250,246,0.34) 100%)',
+          }}
+        />
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            padding: '120px 32px 80px',
+            maxWidth: 1080,
+            margin: '0 auto',
+          }}
+        >
         <div className="eyebrow" style={{ marginBottom: 24 }}>
           § a Chrome sidebar for the curious
         </div>
@@ -124,6 +152,7 @@ export default async function HomePage() {
         <p style={{ marginTop: 14, fontSize: 13, color: 'var(--ink-3)' }}>
           Works on any page — YouTube, podcasts, articles. Free on the Chrome Web Store.
         </p>
+        </div>
       </section>
 
       <InstallExtensionCTA />
